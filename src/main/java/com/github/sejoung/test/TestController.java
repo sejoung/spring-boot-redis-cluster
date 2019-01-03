@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class TestController {
@@ -24,7 +25,8 @@ public class TestController {
     }
 
     @GetMapping("insert")
-    public void insert() {
+    @ResponseBody
+    public String insert() {
 
         redisTemplate.opsForValue().set(KEY + "1", "1");
         redisTemplate.opsForValue().set(KEY + "2", "2");
@@ -32,12 +34,13 @@ public class TestController {
         redisTemplate.opsForValue().set(KEY + "4", "4");
         redisTemplate.opsForValue().set(KEY + "5", "5");
         redisTemplate.opsForValue().set(KEY + "6", "6");
-
+        return "Hello World!";
     }
 
     @GetMapping("select")
-    public void select() {
-        log.debug(redisTemplate.opsForValue().get(KEY + randomUtil.randomRange()));
+    @ResponseBody
+    public String select() {
+        return redisTemplate.opsForValue().get(KEY + randomUtil.randomRange());
     }
 
 }
